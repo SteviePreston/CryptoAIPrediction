@@ -51,12 +51,7 @@ pd.set_option('display.max_rows', df.shape[0]+1)
 #Dataset Augmentation/Manipulation
 df = df.drop(columns=['High','Low','Volume','Dividends','Stock Splits'])
 df['WinLoss'] = 'No Change'
-
-for index, row in df.iterrows():
-    if row['Open'] < row['Close'] :
-        df['WinLoss'] = df['WinLoss'].replace(['No Change'],'Loss')
-    else:
-        df['WinLoss'] = df['WinLoss'].replace(['No Change'],'Win')
+df['WinLoss'] = np.where(df['Open'].shift() < df['Close'], 'Win', 'Loss')
 
 #Splitting The Dataset 
 #x_train, x_test, y_train, y_test=train_test_split(test_size=0.2)
