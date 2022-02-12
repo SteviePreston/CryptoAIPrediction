@@ -50,7 +50,7 @@ pd.set_option('display.max_rows', df.shape[0]+1)
 
 #Dataset Augmentation/Manipulation
 df = df.drop(columns=['High','Low','Volume','Dividends','Stock Splits'])
-df['WinLoss'] = 'Null'
+df['WinLoss'] = 'No Change'
 
 for index, row in df.iterrows():
     if row['Open'] < row['Close'] :
