@@ -44,23 +44,22 @@ print('Etherum Price: $' + ethprice + ' on the ' + dateTime.strftime("%H:%M:%S a
 get_historic_price('BTC-USD', '3mo')
 # ----------------------------------------------------------------------------
 #Name Creation & Reading the CSV
-csvname =csvnamegen('BTC-USD', '3mo')
+csvname = csvnamegen('BTC-USD', '3mo')
 df = pd.read_csv(csvname)
+pd.set_option('display.max_rows', df.shape[0]+1)
 
 #Dataset Augmentation/Manipulation
 df = df.drop(columns=['High','Low','Volume','Dividends','Stock Splits'])
+df['WinLoss'] = 'Null'
 
-for row in df.rows:
-    if df['Open'] < df['Close']:
-        df.insert(4, 'winloss', 'loss')
-    elif df['Open'] > df['Close']:
-        df.insert(4, 'winloss', 'win')
+for index, row in df.iterrows():
+    if row['Open'] < row['Close'] :
+        df['WinLoss'] = df['WinLoss'].replace(['No Change'],'Loss')
     else:
-        df.insert(4, 'winloss', 'no change')
+        df['WinLoss'] = df['WinLoss'].replace(['No Change'],'Win')
 
 #Splitting The Dataset 
-x, y = df['Date'], df['winloss']
-x_train, x_test, y_train, y_test=train_test_split(x,y,test_size=0.2)
+#x_train, x_test, y_train, y_test=train_test_split(test_size=0.2)
 # ----------------------------------------------------------------------------
 #Machine Learning
 print(df)
