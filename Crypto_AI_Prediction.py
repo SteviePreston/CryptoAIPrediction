@@ -55,7 +55,10 @@ df['WinLoss'] = np.where(df['Open'].shift() < df['Close'], 'Win', 'Loss')
 
 # ----------------------------------------------------------------------------
 #Splitting The Dataset 
-#x_train, x_test, y_train, y_test=train_test_split(test_size=0.2)
+df = df.drop(columns=['Open','Close'])
+df.rename(columns=df.iloc[0]).drop(df.index[0])
+
+#x_train, x_test, y_train, y_test=train_test_split(x, y, test_size=0.2)
 
 # ----------------------------------------------------------------------------
 #Machine Learning
